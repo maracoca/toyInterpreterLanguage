@@ -21,6 +21,11 @@ public class CompStmt implements IStmt{
         return state;
     }
 
+    @Override
+    public IStmt deepCopy() {
+        return new CompStmt(first.deepCopy(), second.deepCopy());
+    }
+
     public String toString(){
         return "(" + first.toString() + "; " + second.toString() + ")";
     }

@@ -12,6 +12,11 @@ public class NopStmt implements IStmt{
         return state;
     }
 
+    @Override
+    public IStmt deepCopy() {
+        return new NopStmt();
+    }
+
     public String toString() {
         return "Nop Statement";
     }

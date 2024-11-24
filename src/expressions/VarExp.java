@@ -21,6 +21,11 @@ public class VarExp implements IExp{
         }
     }
 
+    @Override
+    public IExp deepCopy() {
+        return new VarExp(variableName);
+    }
+
     public String toString() {
         return variableName;
     }

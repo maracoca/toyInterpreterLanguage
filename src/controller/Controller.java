@@ -4,15 +4,16 @@ import exceptions.ExecutionStackEmpty;
 import exceptions.MyException;
 import model.MyIStack;
 import model.PrgState;
+import repository.IRepository;
 import repository.Repository;
 import statements.IStmt;
 
 import java.io.IOException;
 
 public class Controller {
-    private Repository repository;
+    private IRepository repository;
 
-    public Controller(Repository repository) {
+    public Controller(IRepository repository) {
         this.repository = repository;
     }
 
@@ -29,10 +30,18 @@ public class Controller {
     public void executeAll() throws MyException {
         PrgState state = repository.getCurentState();
         System.out.println(state);
+        repository.logPrgStateExec();
         MyIStack<IStmt> exe = state.getStk();
         while (!exe.isEmpty()) {
             executeOne(state);
+            repository.logPrgStateExec();
             System.out.println(state);
         }
+    }
+
+    public void reinitializeState(){
+        PrgState curentState = repository.getCurentState();
+        PrgState newState = new PrgState(curentState.getOriginalPrg());
+        repository.addPrgState(newState);
     }
 }

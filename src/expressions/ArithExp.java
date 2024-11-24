@@ -47,6 +47,11 @@ public class ArithExp implements IExp {
             throw new OperandNotInt();
     }
 
+    @Override
+    public IExp deepCopy() {
+        return new ArithExp(this.op, this.expression1.deepCopy(), this.expression2.deepCopy());
+    }
+
     public String toString() {
         char operationSymbol;
         if (op == 1) {

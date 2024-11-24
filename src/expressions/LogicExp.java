@@ -44,6 +44,11 @@ public class LogicExp implements IExp{
 
     }
 
+    @Override
+    public IExp deepCopy() {
+        return new LogicExp(expression1.deepCopy(), expression2.deepCopy(), op);
+    }
+
     public String toString() {
         String operationSymbol;
         if (op == 1) {

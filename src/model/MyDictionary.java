@@ -1,5 +1,8 @@
 package model;
 
+import exceptions.DictionaryException;
+import exceptions.MyException;
+
 import java.security.Key;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +20,11 @@ public class MyDictionary<Key, Value> implements MyIDictionary<Key, Value> {
     }
 
     @Override
-    public Value get(Key key) {
-        return this.map.get(key);
+    public Value get(Key key) throws MyException {
+        if (!isDefined(key)) {
+            throw new DictionaryException();
+        }
+        return map.get(key);
     }
 
     @Override

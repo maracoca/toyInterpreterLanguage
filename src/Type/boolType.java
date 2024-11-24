@@ -12,6 +12,11 @@ public class boolType implements IType{
         return new boolValue(false);
     }
 
+    @Override
+    public IType deepCopy() {
+        return new boolType();
+    }
+
     public String toString() {
         return "bool";
     }

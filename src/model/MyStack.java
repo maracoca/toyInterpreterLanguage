@@ -29,8 +29,10 @@ public class MyStack<T> implements MyIStack<T>{
         if (stack.isEmpty())
             return "";
         String output = stack.getLast().toString();
-        if (stack.size() > 1)
+        if (stack.size() > 1) {
+            output += "\n";
             output += " " + stack.getFirst().toString();
+        }
         return output;
     }
 }

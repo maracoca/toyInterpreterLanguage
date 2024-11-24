@@ -40,6 +40,11 @@ public class IfStmt implements IStmt{
         return state;
     }
 
+    @Override
+    public IStmt deepCopy() {
+        return new IfStmt(condition.deepCopy(), thenBranch.deepCopy(), elseBranch.deepCopy());
+    }
+
     public String toString() {
         return "(IF("+ condition.toString()+") THEN(" +thenBranch.toString() +")ELSE("+elseBranch.toString()+"))";
     }
