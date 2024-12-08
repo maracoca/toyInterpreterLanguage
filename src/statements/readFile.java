@@ -30,7 +30,7 @@ public class readFile implements IStmt{
         MyIDictionary<String, IValue> symbolTable = state.getSymTable();
         IValue varValue = symbolTable.get(varName);
         if (varValue.getType().equals(new intType())) {
-            IValue fileNameValue= expression.eval(symbolTable);
+            IValue fileNameValue= expression.eval(symbolTable, state.getHeap());
             if(fileNameValue.getType().equals(new stringType())){
                 stringValue fileName = (stringValue) fileNameValue;
                 BufferedReader br;

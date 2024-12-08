@@ -40,4 +40,9 @@ public class MyDictionary<Key, Value> implements MyIDictionary<Key, Value> {
     public String toString() {
         return map.toString();
     }
+
+    @Override
+    public Map<Key, Value> getContent() {
+        return this.map;
+    }
 }

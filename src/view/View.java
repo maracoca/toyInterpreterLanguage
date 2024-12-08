@@ -2,6 +2,7 @@ package view;
 
 import Type.boolType;
 import Type.intType;
+import Type.refType;
 import Type.stringType;
 import Values.IValue;
 import Values.boolValue;
@@ -9,10 +10,7 @@ import Values.intValue;
 import Values.stringValue;
 import controller.Controller;
 import exceptions.MyException;
-import expressions.ArithExp;
-import expressions.RelExpression;
-import expressions.ValueExp;
-import expressions.VarExp;
+import expressions.*;
 import model.*;
 import repository.IRepository;
 import repository.Repository;
@@ -29,7 +27,7 @@ public class View {
         IStmt ex1 = new CompStmt(new VarDeclStmt("v", new intType()),
                 new CompStmt(new AssignStmt("v", new ValueExp(new intValue(2))), new PrintStmt(new VarExp("v"))));
 
-        PrgState prg1 = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), ex1);
+        PrgState prg1= new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex1);
         IRepository repo1 = new Repository(prg1, "ex1.txt");
         Controller controller1 = new Controller(repo1);
 
@@ -40,7 +38,7 @@ public class View {
                                 new CompStmt(new AssignStmt("b", new ArithExp(1, new VarExp("a"), new ValueExp(new
                                         intValue(1)))), new PrintStmt(new VarExp("b"))))));
 
-        PrgState prg2 = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), ex2);
+        PrgState prg2= new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex2);
         IRepository repo2 = new Repository(prg2, "ex2.txt");
         Controller controller2 = new Controller(repo2);
 
@@ -52,7 +50,7 @@ public class View {
                                         intValue(2))), new AssignStmt("v", new ValueExp(new intValue(3)))), new PrintStmt(new
                                         VarExp("v"))))));
 
-        PrgState prg3 = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), ex3);
+        PrgState prg3= new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex3);
         IRepository repo3 = new Repository(prg3, "ex3.txt");
         Controller controller3 = new Controller(repo3);
 
@@ -65,12 +63,12 @@ public class View {
                                                 new CompStmt(new PrintStmt(new VarExp("varc")),
                                                         new CompStmt(new readFile(new VarExp("varf"), "varc"),
                                                                 new CompStmt(new PrintStmt(new VarExp("varc")), new closeRFile(new VarExp("varf"))))))))));
-        PrgState prg4 = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), ex4);
+        PrgState prg4= new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex4);
         IRepository repo4 = new Repository(prg4, "ex4.txt");
         Controller controller4 = new Controller(repo4);
 
         IStmt ex5 = new CompStmt(new VarDeclStmt("a", new intType()), new CompStmt(new VarDeclStmt("b", new boolType()), new AssignStmt("a", new VarExp("b"))));
-        PrgState prg5= new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), ex5);
+        PrgState prg5= new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex5);
         IRepository repo5 = new Repository(prg5, "exException.txt");
         Controller controller5 = new Controller(repo5);
 
@@ -82,7 +80,7 @@ public class View {
                                                 new PrintStmt(new ValueExp(new intValue(1))),
                                                 new PrintStmt(new ValueExp(new intValue(0))))))));
 
-        PrgState prg6= new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), ex6);
+        PrgState prg6= new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex6);
         IRepository repo6 = new Repository(prg6, "ex6.txt");
         Controller controller6 = new Controller(repo6);
 
@@ -94,9 +92,64 @@ public class View {
                                                 new CompStmt(new PrintStmt(new VarExp("varc")),
                                                         new CompStmt(new readFile(new VarExp("varf"), "varc"),
                                                                 new CompStmt(new PrintStmt(new VarExp("varc")), new closeRFile(new VarExp("varf"))))))))));
-        PrgState prg7= new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), ex7);
+        PrgState prg7= new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex7);
         IRepository repo7 = new Repository(prg7, "ex7.txt");
         Controller controller7 = new Controller(repo7);
+
+        // example 8: Ref int v;new(v, 20); Ref Ref int a; new(a, v); print(v); print(a)
+        IStmt ex8 = new CompStmt(new VarDeclStmt("v", new refType(new intType())),
+                new CompStmt(new New("v", new ValueExp(new intValue(20))),
+                        new CompStmt(new VarDeclStmt("a", new refType(new refType(new intType()))),
+                                new CompStmt(new New("a", new VarExp("v")),
+                                        new CompStmt(new PrintStmt(new VarExp("v")), new PrintStmt(new VarExp("a")))))));
+        PrgState prg8 = new PrgState(new MyStack<IStmt>(), new MyDictionary<String, IValue>(),
+                new MyList<IValue>(), new MyDictionary<>(), new MyHeap<IValue>(), ex8);
+        IRepository repo8 = new Repository(prg8, "ex8.txt");
+        Controller controller8 = new Controller(repo8);
+
+        // example 9: Ref int v; new(v, 20); Ref Ref int a; new(a, v); print(rH(v)); print(rH(rH(a)) + 5)
+        IStmt ex9 = new CompStmt(new VarDeclStmt("v", new refType(new intType())),
+                new CompStmt(new New("v", new ValueExp(new intValue(20))),
+                        new CompStmt(new VarDeclStmt("a", new refType(new refType(new intType()))),
+                                new CompStmt(new New("a", new VarExp("v")),
+                                        new CompStmt(new PrintStmt(new rHExp(new VarExp("v"))),
+                                                new PrintStmt(new ArithExp(1, new rHExp(new rHExp(new VarExp("a"))), new ValueExp(new intValue(5)))))))));
+
+        PrgState prg9= new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex9);
+        IRepository repo9 = new Repository(prg9, "ex9.txt");
+        Controller controller9 = new Controller(repo9);
+
+        // example 10: Ref int v; new(v, 20); print(rH(v)); wH(v, 30); print(rH(v) + 5);
+        IStmt ex10 = new CompStmt(new VarDeclStmt("v", new refType(new intType())),
+                new CompStmt(new New("v", new ValueExp(new intValue(20))),
+                        new CompStmt(new PrintStmt(new rHExp(new VarExp("v"))),
+                                new CompStmt(new wHStmt("v", new ValueExp(new intValue(30))),
+                                        new PrintStmt(new ArithExp(1, new rHExp(new VarExp("v")), new ValueExp(new intValue(5))))))));
+        PrgState prg10 = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex10);
+        IRepository repo10 = new Repository(prg10, "ex10.txt");
+        Controller controller10 = new Controller(repo10);
+
+        // example 11: Ref int v; new(v, 20); Ref Ref int a; new(a, v); new(v, 30); print(rH(rH(a)))
+        IStmt ex11 = new CompStmt(new VarDeclStmt("v", new refType(new intType())),
+                new CompStmt(new New("v", new ValueExp(new intValue(20))),
+                        new CompStmt(new VarDeclStmt("a", new refType(new refType(new intType()))),
+                                new CompStmt(new New("a", new VarExp("v")),
+                                        new CompStmt(new New("v", new ValueExp(new intValue(30))),
+                                                new PrintStmt(new rHExp(new rHExp(new VarExp("a")))))))));
+        PrgState prg11 = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex11);
+        IRepository repo11 = new Repository(prg11, "ex11.txt");
+        Controller controller11 = new Controller(repo11);
+
+        // example 12: int v; v=4; (while (v>0) print(v); v=v-1); print(v)
+        IStmt ex12 = new CompStmt(new VarDeclStmt("v", new intType()),
+                new CompStmt(new AssignStmt("v", new ValueExp(new intValue(4))),
+                        new CompStmt(new WhileStmt(new RelExpression(new VarExp("v"), new ValueExp(new intValue(0)), ">"),
+                                new CompStmt(new PrintStmt(new VarExp("v")),
+                                        new AssignStmt("v", new ArithExp(2, new VarExp("v"), new ValueExp(new intValue(1)))))),
+                                new PrintStmt(new VarExp("v")))));
+        PrgState prg12 = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex12);
+        IRepository repo12 = new Repository(prg12, "ex12.txt");
+        Controller controller12 = new Controller(repo12);
 
 
         TextMenu menu = new TextMenu();
@@ -108,7 +161,11 @@ public class View {
         menu.addCommand(new RunExample("5", "EXCEPTION  int a; bool b; a=b;", controller5));
         menu.addCommand(new RunExample("6", "int x; int y; x = 10; y = 5; IF ( x > y) THEN (print(1)) ELSE (print(0))", controller6));
         menu.addCommand(new RunExample("7", "string varf; varf = \"testEmpty.in\"; openRFile(varf); int varc; readFile(varf, varc); print(varc); readFile(varf, varc); print(varc); closeRFile(varf)", controller7));
-
+        menu.addCommand(new RunExample("8", "Ref int v;new(v, 20); Ref Ref int a; new(a, v); print(v); print(a)", controller8));
+        menu.addCommand(new RunExample("9", "Ref int v; new(v, 20); Ref Ref int a; new(a, v); print(rH(v)); print(rH(rH(a)) + 5)", controller9));
+        menu.addCommand(new RunExample("10", "Ref int v; new(v, 20); print(rH(v)); wH(v, 30); print(rH(v) + 5);", controller10));
+        menu.addCommand(new RunExample("11", "Ref int v; new(v, 20); Ref Ref int a; new(a, v); new(v, 30); print(rH(rH(a)))", controller11));
+        menu.addCommand(new RunExample("12", "int v; v=4; (while (v>0) print(v); v=v-1); print(v)", controller12));
         menu.show();
     }
 }

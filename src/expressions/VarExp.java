@@ -4,6 +4,7 @@ import exceptions.MyException;
 import Values.IValue;
 import exceptions.VariableNotDefined;
 import model.MyIDictionary;
+import model.MyIHeap;
 
 public class VarExp implements IExp{
     private String variableName;
@@ -13,7 +14,7 @@ public class VarExp implements IExp{
     }
 
     @Override
-    public IValue eval(MyIDictionary<String, IValue> symbolTable) throws MyException {
+    public IValue eval(MyIDictionary<String, IValue> symbolTable, MyIHeap<IValue> heapTable) throws MyException {
         if (symbolTable.isDefined(variableName)) {
             return symbolTable.get(variableName);
         } else{

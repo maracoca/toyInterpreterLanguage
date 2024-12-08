@@ -22,7 +22,7 @@ public class OpenRFile implements IStmt {
 
     @Override
     public PrgState execute(PrgState state) throws MyException {
-        IValue value = this.expression.eval(state.getSymTable());
+        IValue value = this.expression.eval(state.getSymTable(), state.getHeap());
         if (value.getType().equals(new stringType())) {
             stringValue strValue = (stringValue) value;
             if (!state.getFileTable().isDefined(strValue)) {

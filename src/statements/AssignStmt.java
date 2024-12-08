@@ -22,7 +22,7 @@ public class AssignStmt implements IStmt {
     public PrgState execute(PrgState state) throws MyException {
         MyIDictionary<String, IValue> symTable = state.getSymTable();
         if (symTable.isDefined(variable)) {
-            IValue value = expression.eval(symTable);
+            IValue value = expression.eval(symTable, state.getHeap());
             IType varType = symTable.get(variable).getType();
             if (varType.equals(value.getType())) {
                 symTable.put(variable, value);

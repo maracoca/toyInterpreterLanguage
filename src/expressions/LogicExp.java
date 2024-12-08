@@ -6,6 +6,7 @@ import Values.IValue;
 import Values.boolValue;
 import exceptions.OperandNotBool;
 import model.MyIDictionary;
+import model.MyIHeap;
 
 public class LogicExp implements IExp{
     IExp expression1;
@@ -19,9 +20,9 @@ public class LogicExp implements IExp{
     }
 
     @Override
-    public IValue eval(MyIDictionary<String, IValue> symbolTable) throws MyException {
-        IValue value1 = expression1.eval(symbolTable);
-        IValue value2 = expression2.eval(symbolTable);
+    public IValue eval(MyIDictionary<String, IValue> symbolTable, MyIHeap<IValue> heapTable) throws MyException {
+        IValue value1 = expression1.eval(symbolTable, heapTable);
+        IValue value2 = expression2.eval(symbolTable, heapTable);
         if (value1.getType().equals(new boolType())){
             if (value2.getType().equals(new boolType())) {
                 boolValue firstBoolValue = (boolValue) value1;

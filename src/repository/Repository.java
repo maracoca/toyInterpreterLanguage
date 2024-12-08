@@ -46,4 +46,12 @@ public class Repository implements IRepository {
         this.prgStates.set(0, newPrgState);
 //        state = newPrgState;
     }
+
+    public List<PrgState> getPrgStates() {
+        return this.prgStates;
+    }
+
+    public void setPrgStates(List<PrgState> prgStates) {
+        this.prgStates = prgStates;
+    }
 }

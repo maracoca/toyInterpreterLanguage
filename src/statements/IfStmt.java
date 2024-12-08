@@ -25,7 +25,7 @@ public class IfStmt implements IStmt{
     public PrgState execute(PrgState state) throws MyException {
         MyIDictionary<String, IValue> symTable = state.getSymTable();
         MyIStack<IStmt> stk = state.getStk();
-        IValue condValue = condition.eval(symTable);
+        IValue condValue = condition.eval(symTable, state.getHeap());
         if (condValue.getType().equals(new boolType())) {
             boolValue boolCondValue = (boolValue) condValue;
             if (boolCondValue.getValue()){

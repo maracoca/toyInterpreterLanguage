@@ -12,12 +12,14 @@ public class PrgState {
     private MyIList<IValue> out;
     private MyIDictionary<stringValue, BufferedReader> fileTable;
     private IStmt originalProgram;
+    private MyIHeap<IValue> heap;
 
-    public PrgState(MyIStack<IStmt> exe, MyIDictionary<String, IValue> symTable, MyIList<IValue> out, MyDictionary<stringValue, BufferedReader> fileTable, IStmt originalProgram) {
+    public PrgState(MyIStack<IStmt> exe, MyIDictionary<String, IValue> symTable, MyIList<IValue> out, MyDictionary<stringValue, BufferedReader> fileTable, MyIHeap<IValue> heapTable, IStmt originalProgram) {
         this.exe=exe;
         this.symTable=symTable;
         this.out=out;
         this.fileTable=fileTable;
+        this.heap = heapTable;
         this.originalProgram=originalProgram.deepCopy();
         this.exe.push(originalProgram);
     }
@@ -27,6 +29,7 @@ public class PrgState {
         this.symTable = new MyDictionary<>();
         this.out= new MyList<>();
         this.fileTable = new MyDictionary<>();
+        this.heap=new MyHeap<>();
         this.originalProgram=statement;
         this.exe.push(statement);
     }
@@ -51,7 +54,11 @@ public class PrgState {
         return originalProgram;
     }
 
+    public MyIHeap<IValue> getHeap(){
+        return heap;
+    }
+
     public String toString() {
-        return "Execution Stack: " + exe.toString() + "\nSymbol table: " + symTable.toString() + "\nOutput: " + out.toString()  + "\n File Table" + fileTable.toString() + "\n";
+        return "Execution Stack: " + exe.toString() + "\nSymbol table: " + symTable.toString() + "\nOutput: " + out.toString()  + "\nHeap Table: "+ heap.toString()+ "\n File Table: " + fileTable.toString() + "\n";
     }
 }

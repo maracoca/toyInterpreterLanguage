@@ -7,6 +7,7 @@ import Values.IValue;
 import Values.intValue;
 import exceptions.OperandNotInt;
 import model.MyIDictionary;
+import model.MyIHeap;
 
 public class ArithExp implements IExp {
     private IExp expression1;
@@ -20,10 +21,10 @@ public class ArithExp implements IExp {
     }
 
     @Override
-    public IValue eval(MyIDictionary<String, IValue> symbolTable) throws MyException {
-        IValue value1 = expression1.eval(symbolTable);
+    public IValue eval(MyIDictionary<String, IValue> symbolTable, MyIHeap<IValue> heapTable) throws MyException {
+        IValue value1 = expression1.eval(symbolTable, heapTable);
         if (value1.getType().equals(new intType())) {
-            IValue value2 = expression2.eval(symbolTable);
+            IValue value2 = expression2.eval(symbolTable, heapTable);
             if (value2.getType().equals(new intType())) {
                 intValue int1 = (intValue) value1;
                 intValue int2 = (intValue) value2;

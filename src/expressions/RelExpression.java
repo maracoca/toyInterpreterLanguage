@@ -8,6 +8,7 @@ import exceptions.ExpressionOperation;
 import exceptions.MyException;
 import exceptions.OperandNotInt;
 import model.MyIDictionary;
+import model.MyIHeap;
 
 public class RelExpression implements IExp{
     private IExp expression1;
@@ -21,10 +22,10 @@ public class RelExpression implements IExp{
     }
 
     @Override
-    public IValue eval(MyIDictionary<String, IValue> symbolTable) throws MyException {
-        IValue  value1 = this.expression1.eval(symbolTable);
+    public IValue eval(MyIDictionary<String, IValue> symbolTable, MyIHeap<IValue> heapTable) throws MyException {
+        IValue  value1 = this.expression1.eval(symbolTable, heapTable);
         if (value1.getType().equals(new intType())) {
-            IValue value2 = this.expression2.eval(symbolTable);
+            IValue value2 = this.expression2.eval(symbolTable, heapTable);
             if (value2.getType().equals(new intType())) {
                 intValue intValue1 = (intValue) value1;
                 intValue intValue2 = (intValue) value2;

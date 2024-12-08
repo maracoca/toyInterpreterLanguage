@@ -23,7 +23,7 @@ public class closeRFile implements IStmt{
     @Override
     public PrgState execute(PrgState state) throws MyException {
         MyIDictionary<String, IValue> symTable = state.getSymTable();
-        IValue value = this.expression.eval(symTable);
+        IValue value = this.expression.eval(symTable, state.getHeap());
         if (value.getType().equals(new stringType())){
             stringValue strValue = (stringValue) value;
             BufferedReader br;
