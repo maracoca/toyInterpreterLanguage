@@ -16,9 +16,9 @@ public class RunExample extends Command{
     @Override
     public void execute() {
         try {
-            this.controller.reinitializeState();
-            this.controller.executeAll();
-        } catch (MyException e) {
+           // this.controller.reinitializeState();
+            this.controller.allSteps();
+        } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
     }

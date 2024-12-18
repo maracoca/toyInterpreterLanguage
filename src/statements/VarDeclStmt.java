@@ -24,7 +24,7 @@ public class VarDeclStmt implements IStmt{
         }else{
             throw new VariableAlreadyDefined();
         }
-        return state;
+        return null;
     }
 
     @Override

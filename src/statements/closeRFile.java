@@ -41,7 +41,7 @@ public class closeRFile implements IStmt{
         }else{
             throw new OperandNotString();
         }
-        return state;
+        return null;
     }
 
     @Override

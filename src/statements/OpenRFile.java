@@ -38,7 +38,7 @@ public class OpenRFile implements IStmt {
         } else {
             throw new OperandNotString();
         }
-        return state;
+        return null;
     }
 
     @Override

@@ -5,7 +5,9 @@ import exceptions.MyException;
 
 import java.security.Key;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MyDictionary<Key, Value> implements MyIDictionary<Key, Value> {
     private Map<Key, Value> map;
@@ -45,4 +47,12 @@ public class MyDictionary<Key, Value> implements MyIDictionary<Key, Value> {
     public Map<Key, Value> getContent() {
         return this.map;
     }
+
+    @Override
+    public MyIDictionary<Key, Value> deepCopy() {
+        MyDictionary<Key, Value> copy = new MyDictionary<>();
+        copy.map = new HashMap<>(map);
+        return copy;
+    }
 }
+

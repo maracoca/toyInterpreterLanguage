@@ -37,7 +37,7 @@ public class IfStmt implements IStmt{
         }else{
             throw new ExpressionNotBool();
         }
-        return state;
+        return null;
     }
 
     @Override

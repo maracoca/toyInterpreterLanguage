@@ -57,7 +57,7 @@ public class readFile implements IStmt{
         }else{
             throw new OperandNotInt();
         }
-        return state;
+        return null;
     }
 
     @Override

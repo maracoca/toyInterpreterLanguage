@@ -151,6 +151,87 @@ public class View {
         IRepository repo12 = new Repository(prg12, "ex12.txt");
         Controller controller12 = new Controller(repo12);
 
+        IStmt ex13 = new CompStmt(new VarDeclStmt("v", new intType()),
+                new CompStmt(new VarDeclStmt("a", new refType(new intType())),
+                        new CompStmt(new AssignStmt("v", new ValueExp(new intValue(10))),
+                                new CompStmt(new New("a", new ValueExp(new intValue(22))),
+                                        new CompStmt(new forkStmt(new CompStmt(new wHStmt("a", new ValueExp(new intValue(30))),
+                                                new CompStmt(new AssignStmt("v", new ValueExp(new intValue(32))),
+                                                        new CompStmt(new PrintStmt(new VarExp("v")), new PrintStmt(new rHExp(new VarExp("a"))))))),
+                                                new CompStmt(new PrintStmt(new VarExp("v")), new PrintStmt(new rHExp(new VarExp("a")))))))));
+        PrgState prg13 = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex13);
+        IRepository repo13 = new Repository(prg13, "ex13.txt");
+        Controller controller13 = new Controller(repo13);
+
+
+//        IStmt ex14 = new CompStmt(new VarDeclStmt("a", new refType(new intType())),
+//                new CompStmt(new VarDeclStmt("v", new intType()),
+//                        new CompStmt(new New("a", new ValueExp(new intValue(10))),
+//                                new CompStmt(new forkStmt(new CompStmt(new AssignStmt("v", new ValueExp(new intValue(20))), // v = 20
+//                                        new CompStmt(new forkStmt(new CompStmt(new wHStmt("a", new ValueExp(new intValue(40))), PrintStmt(r(a)))),new PrintStmt(new VarExp("v")) // print(v)))
+//                                                 ),
+//                                        new CompStmt(new AssignStmt("v", new ValueExp(new intValue(30))),
+//                                                new CompStmt(new PrintStmt(new VarExp("v")),
+//                                                        new PrintStmt(new rHExp(new VarExp("a")))
+//                                                )
+//                                        )
+//                                )
+//                        )
+//                )
+//        );
+
+        IStmt ex14 = new CompStmt(
+                new VarDeclStmt("a", new refType(new intType())),
+                new CompStmt(
+                        new VarDeclStmt("v", new intType()),
+                        new CompStmt(
+                                new New("a", new ValueExp(new intValue(10))),
+                                new CompStmt(
+                                        new forkStmt(
+                                                new CompStmt(
+                                                        new AssignStmt("v", new ValueExp(new intValue(20))),
+                                                        new CompStmt(
+                                                                new forkStmt(
+                                                                        new CompStmt(
+                                                                                new wHStmt("a", new ValueExp(new intValue(40))),
+                                                                                new PrintStmt(new rHExp(new VarExp("a")))
+                                                                        )
+                                                                ),
+                                                                new PrintStmt(new VarExp("v"))
+                                                        )
+                                                )
+                                        ),
+                                        new CompStmt(
+                                                new AssignStmt("v", new ValueExp(new intValue(30))),
+                                                new CompStmt(
+                                                        new PrintStmt(new VarExp("v")),
+                                                        new PrintStmt(new rHExp(new VarExp("a")))
+                                                )
+                                        )
+                                )
+                        )
+                )
+        );
+
+
+        PrgState prg14 = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex14);
+        IRepository repo14 = new Repository(prg14, "ex14.txt");
+        Controller controller14 = new Controller(repo14);
+
+
+        IStmt ex15 = new CompStmt(new VarDeclStmt("varf", new stringType()),
+                new CompStmt(new AssignStmt("varf", new ValueExp(new stringValue("test.in"))),
+                        new CompStmt(new OpenRFile(new VarExp("varf")),
+                                new CompStmt(new forkStmt(new CompStmt(new VarDeclStmt("varc", new intType()),
+                                        new CompStmt(new readFile(new VarExp("varf"), "varc"),
+                                                new PrintStmt(new VarExp("varc"))))),
+                                        new CompStmt(new VarDeclStmt("varc", new intType()),
+                                                new CompStmt(new readFile(new VarExp("varf"), "varc"),
+                                                        new CompStmt(new PrintStmt(new VarExp("varc")),
+                                                                new closeRFile(new VarExp("varf")))))))));
+        PrgState prg15 = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex15);
+        IRepository repo15 = new Repository(prg15, "ex15.txt");
+        Controller controller15 = new Controller(repo15);
 
         TextMenu menu = new TextMenu();
         menu.addCommand(new ExitCommand("0", "Exit"));
@@ -166,6 +247,9 @@ public class View {
         menu.addCommand(new RunExample("10", "Ref int v; new(v, 20); print(rH(v)); wH(v, 30); print(rH(v) + 5);", controller10));
         menu.addCommand(new RunExample("11", "Ref int v; new(v, 20); Ref Ref int a; new(a, v); new(v, 30); print(rH(rH(a)))", controller11));
         menu.addCommand(new RunExample("12", "int v; v=4; (while (v>0) print(v); v=v-1); print(v)", controller12));
+        menu.addCommand(new RunExample("13", "int v; Ref int a; v = 10; new(a,22); fork(wH(a,30); v = 32; print(v); print(rH(a))); print(v); print(rH(a))", controller13));
+        menu.addCommand(new RunExample("14", "Ref int a;int v;New(a, 10);fork(v = 20;fork(WriteToHeap(a, 40);print(readFromHeap(a)));print(v));v = 30;print(v);print(readFromHeap(a))", controller14));
+        menu.addCommand(new RunExample("15", "string varf; varf=\"test.a\"; openRFile varf; fork(int varc; reafFile(varf,varc); print(varc)); int varc; reafFFile(varf,varc); print(varc); closeFile(varf);", controller15));
         menu.show();
     }
 }

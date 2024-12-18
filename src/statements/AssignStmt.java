@@ -32,7 +32,7 @@ public class AssignStmt implements IStmt {
         }else{
             throw new VariableNotDefined();
         }
-        return state;
+        return null;
     }
 
     @Override

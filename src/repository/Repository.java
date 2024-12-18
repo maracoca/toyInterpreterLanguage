@@ -23,21 +23,21 @@ public class Repository implements IRepository {
         this.logFilePath = logFilePath;
     }
 
-    @Override
-    public PrgState getCurentState() {
-//        return state;
-        return this.prgStates.get(0);
-    }
+//    @Override
+//    public PrgState getCurentState() {
+////        return state;
+//        return this.prgStates.get(0);
+//    }
 
     @Override
-    public void logPrgStateExec() throws MyException {
+    public void logPrgStateExec(PrgState programState) throws MyException {
         PrintWriter logFile;
         try {
             logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)));
         } catch (IOException e) {
             throw new FileException();
         }
-        logFile.println(this.getCurentState().toString());
+        logFile.println(programState.toString());
         logFile.close();
     }
 
@@ -47,10 +47,12 @@ public class Repository implements IRepository {
 //        state = newPrgState;
     }
 
+    @Override
     public List<PrgState> getPrgStates() {
         return this.prgStates;
     }
 
+    @Override
     public void setPrgStates(List<PrgState> prgStates) {
         this.prgStates = prgStates;
     }

@@ -13,4 +13,5 @@ public interface MyIDictionary<Key, Value> {
     void remove(Key key);
     boolean isDefined(Key key);
     Map<Key, Value> getContent();
+    MyIDictionary<Key, Value> deepCopy();
 }
