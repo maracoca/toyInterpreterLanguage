@@ -1,5 +1,6 @@
 package statements;
 
+import Type.IType;
 import Type.stringType;
 import Values.IValue;
 import Values.stringValue;
@@ -47,6 +48,16 @@ public class closeRFile implements IStmt{
     @Override
     public IStmt deepCopy() {
         return new closeRFile(expression.deepCopy());
+    }
+
+    @Override
+    public MyIDictionary<String, IType> typeCheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        IType typeExp = this.expression.typeCheck(typeEnv);
+        if (typeExp.equals(new stringType())) {
+            return typeEnv;
+        } else {
+            throw new OperandNotString();
+        }
     }
 
     public String toString(){

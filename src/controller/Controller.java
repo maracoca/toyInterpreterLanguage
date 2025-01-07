@@ -1,10 +1,13 @@
 package controller;
 
+import Type.IType;
 import Values.IValue;
 import Values.refValue;
 import exceptions.ExecutionStackEmpty;
 import exceptions.FileException;
 import exceptions.MyException;
+import model.MyDictionary;
+import model.MyIDictionary;
 import model.MyIStack;
 import model.PrgState;
 import repository.IRepository;
@@ -24,8 +27,19 @@ public class Controller {
     private IRepository repository;
     private ExecutorService executor;
 
-    public Controller(IRepository repository) {
-        this.repository = repository;
+    public Controller(IRepository repository) throws MyException {
+        try {
+            this.repository = repository;
+            typecheck();
+        }catch (MyException e) {
+            System.out.println("Type check error\n" + e.getMessage());
+        }
+    }
+
+    public void typecheck() throws MyException {
+            PrgState prg = repository.getPrgStates().get(0);
+            MyIDictionary<String, IType> typeEnv = new MyDictionary<>();
+            prg.getOriginalPrg().typeCheck(typeEnv);
     }
 
 

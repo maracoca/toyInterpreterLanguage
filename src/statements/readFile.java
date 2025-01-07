@@ -1,5 +1,6 @@
 package statements;
 
+import Type.IType;
 import Type.intType;
 import Type.stringType;
 import Values.IValue;
@@ -63,5 +64,20 @@ public class readFile implements IStmt{
     @Override
     public IStmt deepCopy() {
         return new readFile(expression.deepCopy(), varName);
+    }
+
+    @Override
+    public MyIDictionary<String, IType> typeCheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        IType typeExp = this.expression.typeCheck(typeEnv);
+        IType typeVar = typeEnv.get(this.varName);
+        if (typeExp.equals(new stringType())) {
+            if (typeVar.equals(new intType())) {
+                return typeEnv;
+            } else {
+                throw new OperandNotInt();
+            }
+        } else {
+            throw new OperandNotString();
+        }
     }
 }

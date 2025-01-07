@@ -1,5 +1,6 @@
 package statements;
 
+import Type.IType;
 import exceptions.MyException;
 import Values.IValue;
 import expressions.IExp;
@@ -24,6 +25,12 @@ public class PrintStmt implements IStmt{
     @Override
     public IStmt deepCopy() {
         return new PrintStmt(exp.deepCopy());
+    }
+
+    @Override
+    public MyIDictionary<String, IType> typeCheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        this.exp.typeCheck(typeEnv);
+        return typeEnv;
     }
 
     public String toString(){

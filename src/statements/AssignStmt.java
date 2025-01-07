@@ -40,6 +40,17 @@ public class AssignStmt implements IStmt {
         return new AssignStmt(variable, expression.deepCopy());
     }
 
+    @Override
+    public MyIDictionary<String, IType> typeCheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        IType typeVar = typeEnv.get(this.variable);
+        IType typeExp = this.expression.typeCheck(typeEnv);
+        if (typeVar.equals(typeExp)) {
+            return typeEnv;
+        } else {
+            throw new WrongTypeAssign();
+        }
+    }
+
     public String toString(){
         return variable + "=" + expression.toString();
     }

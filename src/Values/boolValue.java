@@ -41,9 +41,11 @@ public class boolValue implements IValue{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        boolValue boolValue = (boolValue) o;
-        return value == boolValue.value;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        boolValue boolValue1 = (boolValue) o;
+        return value == boolValue1.value;
     }
 
 }

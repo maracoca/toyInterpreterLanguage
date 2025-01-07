@@ -1,6 +1,8 @@
 package statements;
 
+import Type.IType;
 import exceptions.MyException;
+import model.MyIDictionary;
 import model.MyIStack;
 import model.PrgState;
 
@@ -24,6 +26,11 @@ public class CompStmt implements IStmt{
     @Override
     public IStmt deepCopy() {
         return new CompStmt(first.deepCopy(), second.deepCopy());
+    }
+
+    @Override
+    public MyIDictionary<String, IType> typeCheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        return this.second.typeCheck(this.first.typeCheck(typeEnv));
     }
 
     public String toString(){

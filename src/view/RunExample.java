@@ -17,8 +17,9 @@ public class RunExample extends Command{
     public void execute() {
         try {
            // this.controller.reinitializeState();
+            this.controller.typecheck();
             this.controller.allSteps();
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | MyException e) {
             System.out.println(e.getMessage());
         }
     }

@@ -54,5 +54,13 @@ public class MyDictionary<Key, Value> implements MyIDictionary<Key, Value> {
         copy.map = new HashMap<>(map);
         return copy;
     }
+
+//    @Override
+//    public MyIDictionary<Key, Value> clone() {
+//        Map<Key, Value> dictionaryContent = this.getContent();
+//        MyDictionary<Key, Value> newDictionary = new MyDictionary<>();
+//        newDictionary.put(dictionaryContent.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+//        return newDictionary;
+//    }
 }
 

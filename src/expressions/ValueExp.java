@@ -1,5 +1,6 @@
 package expressions;
 
+import Type.IType;
 import exceptions.MyException;
 import Values.IValue;
 import model.MyIDictionary;
@@ -20,6 +21,11 @@ public class ValueExp implements IExp{
     @Override
     public IExp deepCopy() {
         return new ValueExp(value.deepCopy());
+    }
+
+    @Override
+    public IType typeCheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        return this.value.getType();
     }
 
     public String toString() {

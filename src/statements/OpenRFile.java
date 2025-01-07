@@ -1,5 +1,6 @@
 package statements;
 
+import Type.IType;
 import Type.stringType;
 import Values.IValue;
 import Values.stringValue;
@@ -7,6 +8,7 @@ import exceptions.FileException;
 import exceptions.MyException;
 import exceptions.OperandNotString;
 import expressions.IExp;
+import model.MyIDictionary;
 import model.PrgState;
 
 import java.io.BufferedReader;
@@ -44,5 +46,15 @@ public class OpenRFile implements IStmt {
     @Override
     public IStmt deepCopy() {
         return new OpenRFile(this.expression.deepCopy());
+    }
+
+    @Override
+    public MyIDictionary<String, IType> typeCheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        IType typeExp = this.expression.typeCheck(typeEnv);
+        if (typeExp.equals(new stringType())) {
+            return typeEnv;
+        } else {
+            throw new OperandNotString();
+        }
     }
 }

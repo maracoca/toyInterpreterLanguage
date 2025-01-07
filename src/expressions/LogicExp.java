@@ -1,5 +1,6 @@
 package expressions;
 
+import Type.IType;
 import exceptions.MyException;
 import Type.boolType;
 import Values.IValue;
@@ -48,6 +49,23 @@ public class LogicExp implements IExp{
     @Override
     public IExp deepCopy() {
         return new LogicExp(expression1.deepCopy(), expression2.deepCopy(), op);
+    }
+
+    @Override
+    public IType typeCheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        IType type1, type2;
+        type1 = this.expression1.typeCheck(typeEnv);
+        type2 = this.expression2.typeCheck(typeEnv);
+        if (type1.equals(new boolType())) {
+            if (type2.equals(new boolType())) {
+                return new boolType();
+            } else {
+                throw new OperandNotBool();
+            }
+        }
+        else {
+            throw new OperandNotBool();
+        }
     }
 
     public String toString() {

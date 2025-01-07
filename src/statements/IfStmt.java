@@ -1,10 +1,12 @@
 package statements;
 
+import Type.IType;
 import exceptions.ExpressionNotBool;
 import exceptions.MyException;
 import Type.boolType;
 import Values.IValue;
 import Values.boolValue;
+import exceptions.OperandNotBool;
 import expressions.IExp;
 import model.MyIDictionary;
 import model.MyIStack;
@@ -43,6 +45,18 @@ public class IfStmt implements IStmt{
     @Override
     public IStmt deepCopy() {
         return new IfStmt(condition.deepCopy(), thenBranch.deepCopy(), elseBranch.deepCopy());
+    }
+
+    @Override
+    public MyIDictionary<String, IType> typeCheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        IType typeExp = this.condition.typeCheck(typeEnv);
+        if (typeExp.equals(new boolType())) {
+            this.thenBranch.typeCheck(typeEnv.deepCopy());
+            this.elseBranch.typeCheck(typeEnv.deepCopy());
+            return typeEnv;
+        } else {
+            throw new OperandNotBool();
+        }
     }
 
     public String toString() {

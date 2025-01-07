@@ -12,6 +12,7 @@ public class TextMenu {
     }
 
     public void addCommand(Command c) {
+
         this.commands.put(c.getKey(), c);
     }
 

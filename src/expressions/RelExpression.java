@@ -1,5 +1,7 @@
 package expressions;
 
+import Type.IType;
+import Type.boolType;
 import Type.intType;
 import Values.IValue;
 import Values.boolValue;
@@ -62,6 +64,23 @@ public class RelExpression implements IExp{
     @Override
     public IExp deepCopy() {
         return new RelExpression(expression1.deepCopy(), expression2.deepCopy(), operation);
+    }
+
+    @Override
+    public IType typeCheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        IType type1, type2;
+        type1 = this.expression1.typeCheck(typeEnv);
+        type2 = this.expression2.typeCheck(typeEnv);
+        if (type1.equals(new intType())) {
+            if (type2.equals(new intType())) {
+                return new boolType();
+            } else {
+                throw new OperandNotInt();
+            }
+        }
+        else {
+            throw new OperandNotInt();
+        }
     }
 
     public String toString() {

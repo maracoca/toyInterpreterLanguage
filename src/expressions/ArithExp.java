@@ -1,5 +1,6 @@
 package expressions;
 
+import Type.IType;
 import exceptions.DivisionByZero;
 import exceptions.MyException;
 import Type.intType;
@@ -51,6 +52,22 @@ public class ArithExp implements IExp {
     @Override
     public IExp deepCopy() {
         return new ArithExp(this.op, this.expression1.deepCopy(), this.expression2.deepCopy());
+    }
+
+    @Override
+    public IType typeCheck(MyIDictionary<String, IType> typeEnv) throws MyException {
+        IType type1, type2;
+        type1 = this.expression1.typeCheck(typeEnv);
+        type2 = this.expression2.typeCheck(typeEnv);
+        if (type1.equals(new intType())) {
+            if (type2.equals(new intType())) {
+                return new intType();
+            } else {
+                throw new OperandNotInt();
+            }
+        } else {
+            throw new OperandNotInt();
+        }
     }
 
     public String toString() {

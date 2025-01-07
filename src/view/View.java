@@ -67,6 +67,7 @@ public class View {
         IRepository repo4 = new Repository(prg4, "ex4.txt");
         Controller controller4 = new Controller(repo4);
 
+
         IStmt ex5 = new CompStmt(new VarDeclStmt("a", new intType()), new CompStmt(new VarDeclStmt("b", new boolType()), new AssignStmt("a", new VarExp("b"))));
         PrgState prg5= new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex5);
         IRepository repo5 = new Repository(prg5, "exException.txt");
@@ -162,23 +163,7 @@ public class View {
         PrgState prg13 = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), new MyHeap<>(), ex13);
         IRepository repo13 = new Repository(prg13, "ex13.txt");
         Controller controller13 = new Controller(repo13);
-
-
-//        IStmt ex14 = new CompStmt(new VarDeclStmt("a", new refType(new intType())),
-//                new CompStmt(new VarDeclStmt("v", new intType()),
-//                        new CompStmt(new New("a", new ValueExp(new intValue(10))),
-//                                new CompStmt(new forkStmt(new CompStmt(new AssignStmt("v", new ValueExp(new intValue(20))), // v = 20
-//                                        new CompStmt(new forkStmt(new CompStmt(new wHStmt("a", new ValueExp(new intValue(40))), PrintStmt(r(a)))),new PrintStmt(new VarExp("v")) // print(v)))
-//                                                 ),
-//                                        new CompStmt(new AssignStmt("v", new ValueExp(new intValue(30))),
-//                                                new CompStmt(new PrintStmt(new VarExp("v")),
-//                                                        new PrintStmt(new rHExp(new VarExp("a")))
-//                                                )
-//                                        )
-//                                )
-//                        )
-//                )
-//        );
+        
 
         IStmt ex14 = new CompStmt(
                 new VarDeclStmt("a", new refType(new intType())),
